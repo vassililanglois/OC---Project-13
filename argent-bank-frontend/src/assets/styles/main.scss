@@ -1,3 +1,23 @@
-// Layouts
+// Variables
+@import "./_variables";
 
+// Mixins
+@import "./_mixins";
+
+// Base style
+@import "./_base";
+
+// Utility classes
+@import "./_utilities";
+
+// Layouts
 @import "./layouts/Header";
+@import "./layouts/Footer";
+
+// Components
+@import "./components/Hero";
+@import "./components/Features";
+
+// Pages
+@import "./pages/SignIn";
+@import "./pages/User";

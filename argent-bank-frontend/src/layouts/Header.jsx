@@ -10,7 +10,7 @@ function Header() {
         <h1 className="sr-only">Argent Bank</h1>
       </a>
       <div>
-        <a className="header-item" href="./sign-in.html">
+        <a className="header-item" href="#">
           <i className="fa fa-user-circle"></i>
           Sign In
         </a>
