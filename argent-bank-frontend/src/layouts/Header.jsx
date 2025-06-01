@@ -1,11 +1,24 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getFirstName } from "../features/user/userSelectors";
+import { getIsAuthenticated } from "../features/auth/authSelectors";
+import { logout } from "../features/auth/authSlice";
 
 function Header() {
-  const location = useLocation();
-  const isHomePage = location.pathname === "/";
-  const isUserPage = location.pathname === "/profile";
-  const isSignInPage = location.pathname === "/login";
-  //const isTransactionsPage = location.pathname === '/transactions';
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const firstName = useSelector(getFirstName);
+  const isAuthenticated = useSelector(getIsAuthenticated);
+
+  const handleLogOutClick = async () => {
+    dispatch(logout());
+    navigate("/");
+  };
+
+  const handleProfileClick = async () => {
+    navigate("/profile");
+  };
 
   return (
     <nav className="header">
@@ -17,7 +30,7 @@ function Header() {
         />
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
-      {isHomePage || isSignInPage ? (
+      {isAuthenticated === false ? (
         <div>
           <Link className="header-item" to="/login">
             <i className="fa fa-user-circle"></i>
@@ -26,16 +39,16 @@ function Header() {
         </div>
       ) : null}
 
-      {isUserPage ? (
+      {isAuthenticated === true ? (
         <div className="header-item-container">
-          <a className="header-item" href="#">
+          <button className="header-item" onClick={handleProfileClick}>
             <i className="fa fa-user-circle"></i>
-            Tony
-          </a>
-          <a className="header-item" href="#">
+            {firstName}
+          </button>
+          <button className="header-item" onClick={handleLogOutClick}>
             <i className="fa fa-sign-out"></i>
             Sign Out
-          </a>
+          </button>
         </div>
       ) : null}
     </nav>
