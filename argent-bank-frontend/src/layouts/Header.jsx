@@ -8,14 +8,17 @@ function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // Selectors
   const firstName = useSelector(getFirstName);
   const isAuthenticated = useSelector(getIsAuthenticated);
 
+  // Function to handle the logout click
   const handleLogOutClick = async () => {
     dispatch(logout());
     navigate("/");
   };
 
+  // Function to handle the profile click
   const handleProfileClick = async () => {
     navigate("/profile");
   };
@@ -30,6 +33,7 @@ function Header() {
         />
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
+
       {isAuthenticated === false ? (
         <div>
           <Link className="header-item" to="/login">
