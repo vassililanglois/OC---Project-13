@@ -122,8 +122,14 @@ paths:
         - Bearer: []
       tags:
         - Transaction Module
-      summary: Get transactions for a specific account
+      summary: Account Transactions API
+      description: API for fetching user's transactions
       parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
         - name: accountId
           in: path
           required: true
@@ -149,8 +155,14 @@ paths:
         - Bearer: []
       tags:
         - Transaction Module
-      summary: Update the category of a transaction
+      summary: Transaction Category API
+      description: API for updating a transaction category
       parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
         - name: transactionId
           in: path
           required: true
@@ -170,6 +182,8 @@ paths:
       responses:
         "200":
           description: Category updated successfully
+          schema:
+            $ref: "#/definitions/ApiResponse"
         "400":
           description: Invalid Fields
         "404":
@@ -183,8 +197,14 @@ paths:
         - Bearer: []
       tags:
         - Transaction Module
-      summary: Add or update a note for a transaction
+      summary: Transaction Note API
+      description: API for adding or updating a transaction note
       parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
         - name: transactionId
           in: path
           required: true
@@ -204,6 +224,8 @@ paths:
       responses:
         "200":
           description: Note updated successfully
+          schema:
+            $ref: "#/definitions/ApiResponse"
         "400":
           description: Invalid Fields
         "404":
@@ -219,74 +241,96 @@ securityDefinitions:
 
 definitions:
   User:
+    type: object
     properties:
       email:
         type: string
         description: user email
+        example: user@example.com
       password:
         type: string
         description: user password
+        example: password123
       firstName:
         type: string
         description: user first name
+        example: John
       lastName:
         type: string
         description: user last name
+        example: Doe
 
   Login:
+    type: object
     properties:
       email:
         type: string
         description: user email
+        example: user@example.com
       password:
         type: string
         description: user password
+        example: password123
 
   ApiResponse:
     type: object
     properties:
       status:
         type: integer
+        example: 200
       message:
         type: string
+        example: Operation successful
       body:
         type: object
         properties:
           id:
             type: string
+            example: 64fa1e6d0b123abcde456789
           email:
             type: string
+            example: user@example.com
 
   LoginResponse:
     type: object
     properties:
       token:
         type: string
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
   UserProfile:
     type: object
     properties:
       firstName:
         type: string
+        example: John
       lastName:
         type: string
+        example: Doe
 
   Transaction:
     type: object
     properties:
       id:
         type: string
+        example: tr_001
       date:
         type: string
         format: date-time
+        example: 2025-06-01T14:30:00Z
       amount:
         type: number
         format: float
+        example: 89.99
       description:
         type: string
+        example: Payment of rent
       transactionType:
         type: string
+        example: Electronic
       category:
         type: string
+        example: House
       note:
         type: string
+        example: Monthly rent
