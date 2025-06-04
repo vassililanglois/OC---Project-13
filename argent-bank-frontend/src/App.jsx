@@ -1,20 +1,31 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { Provider } from "react-redux";
-import store from "./app/store";
+import { setToken } from "./features/auth/authSlice";
+
 import Header from "./layouts/Header";
 import Router from "./Router";
 import Footer from "./layouts/Footer";
+import useUserProfile from "./hooks/useUserProfile";
 
-function App() {
+export default function App() {
+  const dispatch = useDispatch();
+
+  const { fetchProfile } = useUserProfile();
+  // Automatically fetch profile when token is present
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      dispatch(setToken(token));
+      fetchProfile();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <>
-      <Provider store={store}>
-        <Header />
-        <Router />
-        <Footer />
-      </Provider>
+      <Header />
+      <Router />
+      <Footer />
     </>
   );
 }
-
-export default App;

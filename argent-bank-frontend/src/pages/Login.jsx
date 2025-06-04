@@ -2,12 +2,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setToken, setAuthError } from "../features/auth/authSlice";
+import useUserProfile from "../hooks/useUserProfile";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { fetchProfile } = useUserProfile();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,6 +32,7 @@ function Login() {
       if (response.ok && data.body && data.body.token) {
         localStorage.setItem("token", data.body.token);
         dispatch(setToken(data.body.token));
+        await fetchProfile();
         navigate("/profile");
       } else {
         alert(data.message || "Erreur lors de la connexion");

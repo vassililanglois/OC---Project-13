@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getFirstName } from "../features/user/userSelectors";
 import { getIsAuthenticated } from "../features/auth/authSelectors";
 import { logout } from "../features/auth/authSlice";
+import { resetUser } from "../features/user/userSlice";
 
 function Header() {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ function Header() {
   // Function to handle the logout click
   const handleLogOutClick = async () => {
     dispatch(logout());
+    dispatch(resetUser());
     navigate("/");
   };
 

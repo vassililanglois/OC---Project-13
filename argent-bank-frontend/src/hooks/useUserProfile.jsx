@@ -1,11 +1,10 @@
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import {
   setFirstName,
   setLastName,
   setEmail,
 } from "../features/user/userSlice";
-import { setToken } from "../features/auth/authSlice";
 
 export default function useUserProfile() {
   const dispatch = useDispatch();
@@ -50,16 +49,6 @@ export default function useUserProfile() {
       body: JSON.stringify({ firstName, lastName }),
     });
   };
-
-  // Automatically fetch profile when token is present
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      dispatch(setToken(token));
-      fetchProfile();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return { fetchProfile, updateProfile };
 }
