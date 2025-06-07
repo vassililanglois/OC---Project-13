@@ -149,6 +149,38 @@ paths:
         "500":
           description: Internal Server Error
 
+  /transactions/{transactionId}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Transaction API
+      description: API for fetching a user's transaction
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - name: transactionId
+          in: path
+          required: true
+          type: string
+          description: The ID of the transaction
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: A transaction
+          schema:
+            items:
+              $ref: "#/definitions/Transaction"
+        "404":
+          description: Transaction not found
+        "500":
+          description: Internal Server Error
+
   /transactions/{transactionId}/category:
     put:
       security:
