@@ -9,18 +9,15 @@ function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // Selectors
   const firstName = useSelector(getFirstName);
   const isAuthenticated = useSelector(getIsAuthenticated);
 
-  // Function to handle the logout click
   const handleLogOutClick = async () => {
     dispatch(logout());
     dispatch(resetUser());
     navigate("/");
   };
 
-  // Function to handle the profile click
   const handleProfileClick = async () => {
     navigate("/profile");
   };

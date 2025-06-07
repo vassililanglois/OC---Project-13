@@ -6,23 +6,17 @@ import Account from "../components/Account";
 import EditUserForm from "../components/EditUserForm";
 
 function User() {
-  // Call functions form custom hook
   const { fetchProfile, updateProfile } = useUserProfile();
 
-  // useState to record the editings inputs
   const [isEditing, setIsEditing] = useState(false);
 
-  // Selectors
   const firstName = useSelector(getFirstName);
   const lastName = useSelector(getLastName);
 
-  // Function to display the editing zone
   const handleEditClick = () => setIsEditing(true);
 
-  // Function to undisplay the editing zone
   const handleCancelClick = () => setIsEditing(false);
 
-  // Function to submit the new user's infos
   const handleSave = async (editedFirstName, editedLastName) => {
     await updateProfile(editedFirstName, editedLastName);
     setIsEditing(false);
